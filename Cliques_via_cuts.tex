@@ -1,0 +1,136 @@
+\documentclass[12pt]{article}
+
+% This file is a modified version of a tex file by Professor Ed Scheiermann from the Department of Applied Mathematics and 
+% Statistics at Johns Hopkins University in Baltimore, Maryland. Many thanks for letting us use it.
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+% various theorems, numbered by section
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{mydef}[thm]{Definition}
+\newtheorem{rem}[thm]{Remark}
+
+\begin{document}
+
+
+\title{Cliques via Cuts: \\ Refuting the Strong Exponential Time Hypothesis with a Subexponential Algorithm for Clique}
+
+\author{Alexander Bistagne \\ 
+Independent Research 2023}
+
+\maketitle
+
+\begin{abstract}
+  This paper presents a short algorithm which finds a max clique in time $2^{ O(n^{\frac{2}{3}}log(n)) } $. Rather than try and improve the average runtime of the algorithm, this paper attempts to cut all the unnecessary heuristics from the algorithm I originally formulated in my research.
+
+\end{abstract}
+
+
+\section{Introduction}
+Off and on now for a while, I have been researching clique problems and PvsNP more generally. The most recent endeavor into Clique research was focused on the idea that if one could find good algorithms for clique in both the dense case and sparse case, one might be able to combine them into a good general algorithm for clique. The following algorithm combines one sparse strategy -the inclusion-exclusion principle- with a well known dense strategy -co-disconnected graphs- and a new dense strategy: balanced cuts in the complement.
+
+
+\section{Preliminaries}
+
+This paper assumes a basic knowledge of graph theory for sake of brevity. (connectedness, complement, minimum degree, neighborhoods, cuts, trees and edges)
+
+\begin{mydef} An algorithm has subexponential time if it runs in time $2^{o(n)}$ \end{mydef}
+
+\begin{conj} The strong exponential time hypothesis[CITATION] claims at least the following: there is no subexponential time algorithm for k-SAT for all $k \ge 3$.\end{conj}
+
+\begin{thm}\label{cliquebound} The strong exponential time hypothesis holds if and only if there is no subexponential algorithm for clique [CITATION]\end{thm}
+
+\begin{mydef} A Gomory-Hu Tree[CITATION] is a weighted spanning tree of a graph where the weight of minimum st cuts in T match the minimum weight of st cuts in the original graph\end{mydef}
+
+\begin{thm} \label{GH} A Gomory-Hu Tree always exists and can be constructed in polynomial time [CITATION]\end{thm}
+
+\begin{thm}\label{CT} Every tree has a balanced cut vertex and it can be found in polynomial time[CITATION]\end{thm}
+
+\begin{mydef} Clique: a clique is an induced subgraph of some other graph which is a complete graph. The complement of a clique is an independent set. A clique is maximal if it is not the induced subgraph of some other clique in the original graph\end{mydef}
+
+\begin{thm} All Maximal cliques (or Independent sets) can be listed in time polynomial per clique ( or independent set)[[CITATION]\end{thm} 
+
+\begin{mydef} The Maximum Clique Search Problem is the problem of finding the largest clique contained in a finite simple undirected graph.\end{mydef}
+
+\section{Algorithm}
+
+\begin{rem}\label{brevity} For sake of brevity we will assume all basic data manipulations on sets: union, intersection, size take linear time.
+\end{rem}
+
+\begin{algorithm}
+\caption{Cliques via Cuts}\label{CC}
+\begin{algorithmic}[1]
+\Procedure{ clique }{ $G$ }
+\If{ $\bar{G}$ is disconnected}
+\State max\_clique = []
+\For {C connected component of $\bar{G}$}
+\State max\_clique append CLIQUE(C)
+\EndFor
+\State \Return max\_clique
+\EndIf
+\If {$ \delta(G) < n - \sqrt[3]{n} -1$ }
+\State Let v have degree = $\delta(G)$
+\State a = CLIQUE( $G \setminus v$)
+\State b = CLIQUE( $G \cap N(v) $) $\cup v$
+\State \Return $|a| \ge |b|$ ? a : b
+\EndIf
+\State $ T \gets$ Gomory\_Hu\_Tree( $\bar{G}$ )
+\State $ v \gets$ BalancedCutVertex($T$)
+\State C $\gets$ []
+\For { edge $uv$ in $T$}
+\State Let $cut$ be the edges represented by $uv$
+\State $C \gets C \cup cut $
+\EndFor
+\State Let H = ( V(G) , C )
+\State max\_clique $\gets$ []
+\For{ maximal independent set I in H}
+\State current\_clique = CLIQUE(G[I])
+\If{size(current\_clique) $>$ size(max\_clique) }
+max\_clique $\gets$ current\_clique \EndIf
+\EndFor
+\State \Return max\_clique
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{thm} \label{main} Algorithm \ref{CC} Cliques via Cuts  is a subexponential algorithm for the maximum clique search problem\end{thm}
+
+\begin{lem}Lines 2-6 of algorithm \ref{CC} are correct, and have worst case recursive structure $T(n) \le T(n-1) + O(n^2)$ \end{lem}
+\begin{proof} We will begin by proving the correctness of lines 2-6 of the algorithm. The maximum independent set on a disconnected graph is clearly the disjoint union of the maximum independent set on each of the components. Thus, the maximum clique  is the disjoint union of the maximum clique on each of the co-components. The runtime for this case is $T(n) \le T(a) + T(b) + O(n^2)$ where a + b = n if there are only two components a similiar structure if there are more because the connectivity test takes at most quadratic time. In the worst case,  b= 1 and this is a chip and conquer recursive relation as explained.
+\end{proof}
+\begin{lem}Lines 7-11 of algorithm \ref{CC} are correct and have worst case recursive structure $T(n) \le T(n-1) + T(n-\sqrt[3]{n}) + O(n^2)$ \end{lem}
+\begin{proof}
+Here is the inclusion exclusion principle. Either the vertex v is in the maximum clique and we can restrict our search to its neighborhood or it is not in the maximum clique and we can safely remove it without effecting the size of the maximum clique. Clearly if we explore both cases, the correct clique is the larger one. Now the degree bound gets us a runtime guarantee of at most $T(n) \le T(n-1) + T(n-\sqrt[3]{n}) + O(n^2)$ because the connectivity test and degree checks take at most quadratic time. 
+\end{proof}
+\begin{lem} \label{size} In line 21 of Algorithm \ref{CC}, G[I] always has co-components of size at most $\frac{n}{2}+ 1$\end{lem}
+\begin{proof}
+$G[I]$ is an induced subgraph of $G\cup H$ proof:$ (G \cup H) [I] = G[I] \cup H[I] = G[I] \cup (I,\emptyset) = G[I]$
+$G\cup H$ is co-disconnected with co-components of size at most $\frac{n}{2}+ 1$ proof: The cuts which isloate v in T must also isolate v in G by the gomory hu tree correspondence, and furthermore the size of the graph on the not v side of a cut in T is the same size as the not v side of a cut in G. Thus since the cuts isolate v in T and make each component at most size $\frac{n}{2}+ 1$. These edges make $G \cup H$ `s co-components at most size $\frac{n}{2}+ 1$ which makes the co-components of G[I] at most size $\frac{n}{2}+ 1$
+\end{proof}
+\begin{lem} \label{count} In line 20 of algorithm \ref{CC}, there are at most $2^{n^{\frac{2}{3}}}$ such maximal independent sets.\end{lem}
+\begin{proof} Because to reach line 20, line 7 must be false, We know that when line 20 is reached, the minimum degree of G is at least $n - \sqrt[3]{n} -1$ Thus the maximum degree of $\bar{G}$ is at most $\sqrt[3]{n}$. Because the maximum degree bounds the minimum degree and the minimum degree bounds the minimum cut, we know that the edge weight of T is at most $\sqrt[3]{n}$ and because T is a spanning tree of $\bar{G}$ , the degree of v is at most $\sqrt[3]{n}$ in T. Therefore the number of edges in H is at most $n^{\frac{2}{3}}$. Thus, by choosing only one vertex of each edge we can get an upper bound on the number of maximal independent sets as $2^{n^{\frac{2}{3}}}$.
+\end{proof}
+\begin{lem}Lines 12-23 of algorithm \ref{CC} are correct and imply recursion $T(n) \le 2^{n^{\frac{2}{3}}}(T(n/2+1)+ O(n^2)) + poly(n)$\end{lem}
+\begin{proof} Because H is a cut of $\bar{G}$ it is a subgraph; thus, $G$ is a subgraph of $\bar{H}$. So the maximum clique of $G$ is a subclique of a maximal clique of $\bar{H}$ which is identical to a maximal independent set of $H$. Thus by checking every maximal independent set of H we must find the maximum clique of G. Now combining this correctness with lemmas \ref{size} and \ref{count}, and the nature of this third case always feeding back into the first case. Theorems \ref{GH} and \ref{CT} bound our work per case on line 12 and 13, Remark \ref{brevity} bounds 14-19 \& 22-23 and we get the third case.
+\end{proof}
+\begin{proof}Now we can finish theorem \ref{main}. By combining the cases it should be clear, that this algorithm is dominated by the recursion tree size, and on their own each case implies a subexponential recursion tree of size $2^{O(n^{\frac{2}{3}}log(n))}$ time. Since the recursion cases have no ability to interact to make large subproblems, the theorem follows.\end{proof}
+\begin{cor} The Exponential time Hypothesis is False\end{cor}
+\begin{proof} Take theorem \ref{main} and combine with theorem \ref{cliquebound}\end{proof}
+\section{Conclusion}
+I know that claiming this disproof is an very high stakes claim; therefore, if this paper is wrong, please politely refute. Regardless, I think this paper presents a simple interesting algorithm. I think a lot of interesting heuristics could fit in between lines 6 and 7 of the algorithm, but that was not the goal with this paper. The goal of this paper was to demonstrate competency in comutational complexity and related topics.
+\end{document}
