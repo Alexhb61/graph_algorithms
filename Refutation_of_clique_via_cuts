@@ -1,0 +1,13 @@
+I'll keep my refutation of my short paper short:
+Lemma 3.5 assumes that The cut Tree of a graph is a spanning tree in the sense that it is a subgraph.
+THIS IS FALSE. 
+https://arxiv.org/abs/1807.07331
+Characterizes the small amount of times this is true.
+Thus the proof falls apart.
+
+Is the independent set problem NP-complete when both the graph's maximum degree and the graph's cut tree's maximum degree are both bounded?
+I don't know.
+Is the counting version #P-complete under those same constraints?
+I don't know.
+Can I rewrite the algorithm to solve those problems under these constraints?
+Maybe. 
