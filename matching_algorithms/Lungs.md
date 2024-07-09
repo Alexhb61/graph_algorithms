@@ -9,21 +9,22 @@ Let each sick patient find d  tit for tat potential donors and need l lobes to b
 This could allow more flexibility. 
 
 ## Partial formulation
-We can set this up so far as a b-perfect matching problem Linear Program.
+We can set this up so far as a weighted b-perfect matching problem Linear Program.
+I refe
 #### For each sick patients p,
-1. there is a vertex p of weight l  ( allowing them to receive l lobes)
-2. there is a vertex p' of weight l ( allowing them to unlock l donors)
+1. there is a vertex p of b-value l  ( allowing them to receive l lobes)
+2. there is a vertex p' of b-value l ( allowing them to unlock l donors)
 3. there is a value 0 edge between p and p'
-4. p has positive value incoming edges from donors d' or a
+4. p has positive weight incoming edges from donors d' or a
 5. For each of the donors in their donor pool:  an weight 0 edge from p' to d
 6. p' has a loop on itself (this allows a patient to receive donations without their donors donating)
 #### For each potential donor d,
-1. there is a vertex d of weight 1.
-2. there is a vertex d' of weight 1.
-3. There is a value 0 edge between d and d' (allowing the donor to not participate)
+1. there is a vertex d of b-value 1.
+2. there is a vertex d' of b-value 1.
+3. There is a weight 0 edge between d and d' (allowing the donor to not participate)
 #### For each altruistic donor a,
-1. there is a vertex a of weight 1.
-2. There is a zero value loop on a. (allowing the donor to not participate)
+1. there is a vertex a of b-value 1.
+2. There is a zero weight loop on a. (allowing the donor to not participate)
 
 ## All or nothing Surgery:
 For some patients it might be important that they get the new lung lobes all at once.
