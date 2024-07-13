@@ -4,23 +4,28 @@ There are multiple papers on this subject.
 A less technical explanation is available [here](https://www.kidneyregistry.org/for-donors/kidney-donation-blog/what-is-a-kidney-donation-chain/).
 
 # The Problem of Lung Transplant Networks:
-We will talk about the concrete ethics, a computationally-feasible formulation, and then the computationally-hard logistically-feasible formulation.
+We will talk about the concrete ethics, the simple feasible formulation, a computationally-feasible formulation, and then the computationally-hard logistically-feasible formulation.
 ## The Discrete Parts:
-A person's lungs can be safely discussed as 5 lobes (discussing it as more objects complicates healing and surger).[Expert Testimony Needed]
+A person's lungs can be safely discussed as 5 lobes (discussing it as more objects complicates healing and surgery).[Expert Testimony Needed]
 However, when live lung transplants are considered they are most frequently done as 2 live donors donating one lobe each to a child. [CITATION NEEDED]
 #### Let us take that as the safe donatable unit: 1 lobe. 
 When deceased donors are included, the most common transplants are double lung transplant and single lung transplant. [CITATION NEEDED]
 Thus the amount of lobe donations a person could receive as a variable between 2 and 5 through other means.
 Because we are taking 1 lobe from health donors, I am under the impression that we should cap the amount of lobes received at 4 to be fair to donors. [Expert Input needed]
-Similarly, the live donor version of a single lobe transplant might be a single lobe transplant. [Expert Testimony Needed]
+Similarly, the live donor version of a single lung transplant might be a single lobe transplant. [Expert Testimony Needed]
 #### Let us take the above as the Ethically sound range of donations: 1 to 4 lobes received.
+Lastly, a deceased donor has 5 lobes to donate not all of which need to go to the same patient.
+## The Simple Formulation:
+This is the formulation where all donors are either altruistic or deceased or directed-good-matches donors.
+The reason this part doesn't already exist is that it still requires centralized logistics in order to run.
+#### For each sick patient
+
 ## The Tit for Tat trade:
 A directed potential donor is someone who would like to donate to a patient, but is not necessarily the best match for that patient. (Is this the best term for the donor type?) [Citation Needed]
 #### Let each sick patient find d  directed potential donors and need l lobes to be donated to them.
 This would create a donor pool of directed potential donors.
 There might be ethics reasons we need d to equal l, and their might be efficiency reasons that d should exceed l.
 The following formulation actually allows donors to participate in multiple pools while still never being asked to donate twice.
-
 ## Solvable Partial formulation
 We can set this up so far as a weighted b-perfect matching problem Linear Program.
 This problem can be solved optimally, and so we can compare how the feasibility or fancier constraints effect or don't effect the total medical benefit.
