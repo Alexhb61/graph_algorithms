@@ -18,7 +18,20 @@ Lastly, a deceased donor has 5 lobes to donate not all of which need to go to th
 ## The Simple Formulation:
 This is the formulation where all donors are either altruistic or deceased or directed-good-matches donors.
 The reason this part doesn't already exist is that it still requires centralized logistics in order to run.
-#### For each sick patient
+We can formulate this as a weighted b-matching problem.
+The total weight in any matching is equal to total medical utility gained.
+CONCERN: This formulation doesn't handle all or nothing constraints.
+#### For each sick patient s,
+1. There is a vertex of b-value between 1 and 4 depending on their need (excluding the lobes provided by any directed-good-matches)
+#### For each altruistic donor a,
+1. There is a vertex of b-value 1.
+2. There is a 0 weight loop on said vertex.
+#### For each deceseaed donor z,
+1. Ther is a vertex of b-value 5.
+#### For each donor patient pair
+1. IF the pairing meets standards; THEN there is an edge of medical benefit weight w.
+### Solving This Problem:
+The problem of finding the maximum weight b-matching has relatively efficient algorithms.
 
 ## The Tit for Tat trade:
 A directed potential donor is someone who would like to donate to a patient, but is not necessarily the best match for that patient. (Is this the best term for the donor type?) [Citation Needed]
