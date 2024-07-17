@@ -34,7 +34,9 @@ CONCERN: This formulation doesn't handle all or nothing constraints.
 The problem of finding the maximum weight b-matching has relatively efficient algorithms.
 
 ## The Tit for Tat trade:
-A directed potential donor is someone who would like to donate to a patient, but is not necessarily the best match for that patient. (Is this the best term for the donor type?) [Citation Needed]
+A directed potential donor is someone who would like to donate to a patient, but is not necessarily the best match for that patient. 
+So, they will commit to giving a lung lobe if their directed beneficiary gets a lobe.
+(Is this the best term for the donor type? or is directed incompatible donor a better name) [Citation Needed]
 #### Let each sick patient find d  directed potential donors and need l lobes to be donated to them.
 This would create a donor pool of directed potential donors.
 There might be ethics reasons we need d to equal l, and their might be efficiency reasons that d should exceed l.
@@ -72,7 +74,10 @@ A potential directed donor is only willing to go into surgery either after or si
 The person whose pool they are in.
 Thus, for some constraints, we need to view this as a directed graph or network where we merge verticies p and p' (likewise with d and d').
 All edges from d' to p need to be directed like that, and edges from d to p' need to be directed like that.
-Call this the Proposal network. [Name consultation needed]
+Call this the Proposal network.
+We can also think of it as a network of tasks where each transplant is a proposed task.
+Directed edges are partial ordering constraints of tasks.
+[Name consultation needed]
 We call a constraint maybe-feasible if it is easy to detect the violation of the constraint, but hard to enumerate/list using standard computational complexity definitions of easy(polynomial time) and hard(exponential space).[Name consultation needed]
 
 ### Chest Cavity Constraints: 
@@ -95,12 +100,14 @@ This is an easy to detect structure (linear time) but is a subgraph, And so is m
 ### Plan length Feasibility constraints:
 We will be able to estimate how long a plan is by measuring the length of sequential surgeries by looking at the strongly connected components condensation of the Proposal Network.
 Because that condensation is a directed acyclic graph, we can detect the longest path in the dag with components weighted by duration or some similar metric.
-Thus, we might need to bound the lengths of theses plans because of urgency constraints.
+In the formulation of the proposal network as a set of tasks, this is the critical path in the network.
+We might need to bound the lengths of theses plans because of urgency constraints.
 Again, this length can be computed for a plan in linear time, but is a subgraph feature; thus, this constraint fits into the category of maybe-feasible constraints.
 
 ### Plan size Feasability constraints:
-We can detect a set of surgeries that need to approved or rejected as a whole as a weakly connected component in the Proposal Network.
+We can detect a set of surgeries that need to approved or rejected (or cut down) as a whole as a weakly connected component in the Proposal Network.
 I am referring to this as a plan. 
+A plan can be cut along a point in a topological ordering of the strongly connected component condensation.
 This size of that weakly connected component in terms of nodes is equal to the number of patients whose consent is needed on some level.
 Thus, we might need to bound this size because of likelihood of backing out concerns.
 This is an easy to detect structure (linear time) but is a subgraph, and so fits into our regime of maybe-feasible.
