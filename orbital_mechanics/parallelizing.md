@@ -48,3 +48,11 @@ It seems possible to map fixed precision reals to the p-adic integers, (1/2 = a 
 and then run the computation in multiple p-adic systems. 
 But it isn't clear to me, how one might either find a pattern in the p-adic expansion and extract a rational.
 Or how one might locate a real number via multiple p-adic approximations.
+#### Here is an idea:
+A continuous function maps a ball of real numbers ( using the standard metric) to a ball of real numbers.
+A finite precision computation implementing a continuous function has a finite set of acceptable inputs and outputs.
+Thus, a p-adic computation of a finite precision continuous real function is permitted to use the context of the input or output range in order to complete its computation.
+If the real number inputs are approximated by numbers with fractional part in base 4/3(ie as powers of (3/4) )
+Then the real number ouput of a multivariate polynomial (a computation of additions and multiplications) will still have this form.
+So, when you map these inputs to the 3-adic integers, the output ball in the 3-adic numbers that results from a partial p-adic computation intersects only 1 ball that could have been the output of the partial fixed point computation. 
+This idea might need more rigor.
