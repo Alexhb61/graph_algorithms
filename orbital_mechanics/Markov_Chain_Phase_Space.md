@@ -21,3 +21,17 @@ The boundary conditions of the ODE are well defined: crash trajectories and esca
 The phenomenon of interest is collision trajectories, so that we can remove large pieces of space trash which are about to collide before they collide.
 This can be roughly computed as the inner product of location distributions over time for two pieces of trash.
 The boundary conditions will help reduce the dimensions, and zones of high interest could help condense less interesting parts of state space.
+The transition probabilities could be calculated by uniformaly sampling over the range a point represents and calculating the possible new states.
+
+### 3-Body Problem Periodic Solutions:
+This problem by default has 18 degrees of freedom 3 objects * 3 dimensions * ( 1 quantity and its derivative).
+However, we can remove many degrees of freedom by centering a particular body, and choosing a second body to form an axis with,
+then defining the third body to be in the xy plane. This gives 3 positional degrees of freedom.
+By choosing our reference frame to be the body at the origin, we get 6 movement degrees of freedom.
+If we assume that the net momentum of the problem is also zeroed, we can remove 3 more degrees of freedom.
+So we have 6 dimensions of the ideal 3-body problem.
+I currently don't know what boundary conditions should be for this problem.
+The Graph theory construct which overgeneralizes a periodic solution is a strongly connected component in the markov chain.
+The Matrix construct which overgeneralizes a periodic solution is an eigenvector with 
+We can the focus the search space on these portions of the problem.
+Refining the Markov Chain in these spaces is easier done for the graph theory version.
