@@ -25,13 +25,16 @@ The transition probabilities could be calculated by uniformaly sampling over the
 
 ### 3-Body Problem Periodic Solutions:
 This problem by default has 18 degrees of freedom 3 objects * 3 dimensions * ( 1 quantity and its derivative).
-However, we can remove many degrees of freedom by centering a particular body, and choosing a second body to form an axis with,
-then defining the third body to be in the xy plane. This gives 3 positional degrees of freedom.
-By choosing our reference frame to be the body at the origin, we get 6 movement degrees of freedom.
-If we assume that the net momentum of the problem is also zeroed, we can remove 3 more degrees of freedom.
-So we have 6 dimensions of the ideal 3-body problem.
-I currently don't know what boundary conditions should be for this problem.
+However, we can remove many degrees of freedom by centering the center of mass,
+and choosing the center of two masses with the third to form an axis with,
+then defining all three masses to be in the xy plane.
+This gives 3 positional degrees of freedom.
+By choosing our reference frame to be center of mass and setting the net momentum to zero, we get 6 movement degrees of freedom.
+By choosing the angular momentum to be a constant, we might be able to remove another degree of freedom.
+So we have 8 dimensions of the ideal 3-body problem.
+The boundary conditions include the phase space near the singularities which correspond to collisions.
+The other big boundary condition is when the distances between the bodies trend towards infinity.
 The Graph theory construct which overgeneralizes a periodic solution is a strongly connected component in the markov chain.
-The Matrix construct which overgeneralizes a periodic solution is an eigenvector with 
+The Matrix construct which overgeneralizes a periodic solution is an eigenvector of the transition probability matrix.
 We can the focus the search space on these portions of the problem.
 Refining the Markov Chain in these spaces is easier done for the graph theory version.
