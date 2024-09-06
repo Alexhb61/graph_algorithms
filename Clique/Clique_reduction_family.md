@@ -23,9 +23,9 @@ and base cases wherever the independence number drops too low.
 #### Clique on G can be reduced to at most 2^(epsilon*n) clique problems on H-free induced subgraphs of G
 #### where H is a family of graphs and for all h in H, h has < poly(1/epsilon) verticies .
 #### and H contains >= 2^poly(1/epsilon) many graphs
-I have two different algorithms with this structured behaviour.
-They can both be seen as generalizations of the above algorithm with independent sets.
-### Algorithm 1
+I have two different reductions with this structured behaviour.
+They can both be seen as generalizations of the above reduction with independent sets.
+### Reduction 1
 There exist parameters h,a to be chosen in the analysis section.
 The trivial clique is the empty set.
 ```
@@ -38,6 +38,7 @@ if J is found:
   return w
 return H_Free_clique(G)
 ```
+By N(C) we mean the set of verticies adjacent to all members of C but not C itself.
 The Recursion relation is ```T(n) <= O(n^h(h^(a+1))) + O((h+a)^a) T(n-h)
 We can look at n^h many possible subgraphs J and do h^(a+1) work to confirm the clique bound.
 The number of subproblems is at most h + a choose a divided by a! since we are choosing all cliques of size at most a
@@ -50,8 +51,41 @@ we can still find a J with the desired h,a in theory
 This make a of order 1/epsilon with some log(1/epsilon) factors.
 It also make h of order 1/epsilon^2 with some log factors.
 So that means the graphs excluded when we fail to find such an H have the correct size.
-### H family is large for algorithm 1
+### H family is large for Reduction 1
 Good REFERENCE OR Strong PROOF NEEDED
+
 Weak Argument:
 If H contains less than 2^(1/epsilon) graphs, and there is constructive proof of that.
 Then a faster circuit for root n clique is to just go through that list of graphs and check isomorphism.
+
+### Reduction 2
+let p be the smallest integer such that epsilon > lg(2p+1)/p
+I'm going to use pathwidth even though treewidth might be better because I'm more sure it works.
+```
+Clique(G):
+Find an induced subgraph J of G which has 2p verticies and pathwidth at most p-1
+if found J:
+  w = Clique(G\V(J) )
+  for each node n in path decomposition of J :
+    w = max( w, Clique( G[N[n]] ) )
+  return w
+return H_Free_clique(G)
+```
+Note that we are including all the verticies of a node in its subproblem.
+By N[n] We mean all the verticies adjacent to any vertex inside the node n includeing all the verticies inside n.
+I am under the impression that a path decomposition has as many nodes as the underlying graph has verticies.
+Because each clique in the small graph is contained by one node, this considers all possible cliques.
+The above reduction has recursion relation:
+```T(n) <= poly(n) + 2p T(n-p) + T(n-2p)```
+because it considers at most 2p nodes each excluding the p verticies not in the node. And one subproblem without the whole graph.
+Clearly, the graphs excluded are in poly(1/epsilon)
+### Reduction 2 searches through a large family
+If we put 2p verticies on the number line at unit intervals, and let them connect to any verticies at distance at most p-1 away,
+this constructs a graph of pathwidth p-1 with at most 2p(p-1) edges.
+There are 2^(2p(p-1)) labelled graphs constructed this way each have at most (2p)! many automorphisms.
+So the number of unlabeled graphs is at least 2^(2p(p-1)-2plogp) which is still in 2^poly(1/epsilion)
+## Conclusion
+So we can reduce the clique problem on general graphs, to the clique problem on graphs with a lot of excluded graphs.
+So what? Well To my understanding most random graphs of sufficient size, are universal (see rado graph).
+And so all the base cases of these reductions on a random graph are small. 
+Does this hold for interesting but not random cases? I don't know, but I think so. 
