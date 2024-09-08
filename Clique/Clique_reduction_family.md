@@ -84,8 +84,42 @@ If we put 2p verticies on the number line at unit intervals, and let them connec
 this constructs a graph of pathwidth p-1 with at most 2p(p-1) edges.
 There are 2^(2p(p-1)) labelled graphs constructed this way each have at most (2p)! many automorphisms.
 So the number of unlabeled graphs is at least 2^(2p(p-1)-2plogp) which is still in 2^poly(1/epsilion)
+
+## Reductions from General Clique to Clique on Graphs of Treewidth n-O(1)
+### tangent about treewidth decompositions
+##### Proposition 1: A n vertex graph of treewidth at most k has representation as a partial k-tree where the k-tree has n-k maximal cliques
+Proof: Start with a k-tree with one node and keep adding nodes/verticies the numbers of nodes and verticies increase in lockstep.
+##### Proposition 2: A n vertex graph of treewidth at most n-k has representation as a partial n-k-tree where the n-k-tree has at least n-2k+2 verticies common to all nodes and at most n-k verticies (assuming the graph is not the complete graph on n verticies)
+Proof: Start with a n-k-tree with two nodes it has n-k common verticies. As we add the k-2 verticies to make a n vertex graph, each addition might remove one common vertex or remove zero common verticies.
+#### Theorem: For every fixed k, Given an input graph G on n verticies, in polynomial time O(n^(2k-2)), we can find a n-k tree T such that G is a spanning subgraph of T.
+Proof: We choose between 2k-2 and k active verticies c for the decomposition (as opposed to the other verticies which will be common to all nodes).
+Then we find a tree decomposition of width |c|-k on those c verticies which can be computed in time exponential in |c| which is dominated by the number of choices of active verticies. Note we are assuming n >> k.
+
+Remark: This also acts as forbidden induced subgraph characterization of n-k treewidth graphs.
+### Reduction
+#### Theorem:  for every epsilon > 0 we can reduce clique on a graph G to clique on graphs H which have treewidth n(H)-poly(1/epsilon)
+#### In O*(2^(epsilon*n)) time with a 2^(epsilon *n) of subproblems
+let p be the smallest integer such that epsilon> lg(p)/(p-1)
+Proof: 
+```
+Clique(G) :
+(found, tree_decomposition) = High_tree_decompostion(G,p) # Finds an n-p treewidth decomposition if it exists
+if found:
+  w = empty_clique()
+  for each node in tree_decomposition:
+    w = max(w, Clique(G[node]))
+  return w
+return Nearly_n_Treewidth_clique(G)
+```
+Given the theorem above and the proposition above this algorithm has a recursion relation:
+```T(n) <= pT(n-p+1) + O(n^(2p-2)) ```
+Which by the chip and be conquered master theorem takes 2^(epsilon*n) time / subproblems.
+
 ## Conclusion
 So we can reduce the clique problem on general graphs, to the clique problem on graphs with a lot of excluded graphs.
 So what? Well To my understanding most random graphs of sufficient size, are universal (see rado graph).
 And so all the base cases of these reductions on a random graph are small. 
 Does this hold for interesting but not random cases? I don't know, but I think so. 
+I think the treewidth version might subsume the pathwidth version.
+Especially since I have a characterization of the terminal state.
+
