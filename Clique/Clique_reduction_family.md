@@ -3,6 +3,8 @@
 I don't believe the Exponential Time Hypothesis.
 I do not have any complete proofs of that belief.
 However, below are some arbitrarily fast exponential time reductions from the general clique problem to weird instances.
+These can also be seen as being similar to the sparsification lemma on SAT problems. There a formula is reduced to a disjunction of sparser formulas.
+Here the clique function of a graph is reduced to the clique function of much denser graphs.
 ## Reductions from the general clique problem to clique problem with bounded independence number.
 This is a simple enough proof that it might already exist in the literature, but I don't think I've seen it.
 The basic key fact about clique's and independent sets is they have maximum intersection size 1.
