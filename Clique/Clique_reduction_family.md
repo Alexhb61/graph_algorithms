@@ -98,11 +98,13 @@ Then we find a tree decomposition of width |c|-k on those c verticies which can 
 Remark: This also acts as forbidden induced subgraph characterization of n-k treewidth graphs.
 ### Reduction
 #### Theorem:  for every epsilon > 0 we can reduce clique on a graph G to clique on graphs H which have treewidth n(H)-poly(1/epsilon)
-#### In O*(2^(epsilon*n)) time with a 2^(epsilon *n) of subproblems
+#### or are of size n(H) < poly(1/epsilon) in O*(2^(epsilon*n)) time with a 2^(epsilon *n) of subproblems
 let p be the smallest integer such that epsilon> lg(p)/(p-1)
 Proof: 
 ```
 Clique(G) :
+if n(G) <= 2p-2 :
+  return brute_force_clique(G)
 (found, tree_decomposition) = High_tree_decompostion(G,p) # Finds an n-p treewidth decomposition if it exists
 if found:
   w = empty_clique()
@@ -113,7 +115,7 @@ return Nearly_n_Treewidth_clique(G)
 ```
 Given the theorem above and the proposition above this algorithm has a recursion relation:
 ```T(n) <= pT(n-p+1) + O(n^(2p-2)) ```
-Which by the chip and be conquered master theorem takes 2^(epsilon*n) time / subproblems.
+Which by the chip and be conquered master theorem takes 2^(epsilon*n) time / subproblems, and does
 
 ## Conclusion
 So we can reduce the clique problem on general graphs, to the clique problem on graphs with a lot of excluded graphs.
