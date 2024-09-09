@@ -4,7 +4,7 @@ I don't believe the Exponential Time Hypothesis.
 I do not have any complete proofs of that belief.
 However, below are some arbitrarily fast exponential time reductions from the general clique problem to weird instances.
 These can also be seen as being similar to the sparsification lemma on SAT problems. There a formula is reduced to a disjunction of sparser formulas.
-Here the clique function of a graph is reduced to the clique function of much denser graphs.
+Here the clique function of a graph is reduced to the clique function of much denser subgraphs.
 ## Reductions from the general clique problem to clique problem with bounded independence number.
 This is a simple enough proof that it might already exist in the literature, but I don't think I've seen it.
 The basic key fact about clique's and independent sets is they have maximum intersection size 1.
@@ -117,13 +117,11 @@ return Nearly_n_Treewidth_clique(G)
 ```
 Given the theorem above and the proposition above this algorithm has a recursion relation:
 ```T(n) <= pT(n-p+1) + O(n^(2p-2)) ```
-Which by the chip and be conquered master theorem takes 2^(epsilon*n) time / subproblems, and does
-
+Which by the chip and be conquered master theorem, takes 2^(epsilon*n) time / subproblems.
+## Reduction from general clique to clique of minimum degree n- O(1)
 ## Conclusion
 So we can reduce the clique problem on general graphs, to the clique problem on graphs with a lot of excluded graphs.
 So what? Well To my understanding most random graphs of sufficient size, are universal (see rado graph).
 And so all the base cases of these reductions on a random graph are small. 
 Does this hold for interesting but not random cases? I don't know, but I think so. 
-I think the treewidth version might subsume the pathwidth version.
-Especially since I have a characterization of the terminal state.
 
