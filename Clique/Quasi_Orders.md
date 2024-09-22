@@ -32,6 +32,7 @@ Thus, given all 9 assumptions, we have shown that there is a Polynomial time cer
 ### Concern
 I get too excited/distracted by potential instatiations of this theorem.
 I found that clique cover is closed under induced minors, and misread a theorem causing me to think it had a finite obstruction set.
+When we think of the operations as forming a quasi-order, the quasi-order being well-founded is sufficient for the obstruction set to be finite.
 ## Problem with the canonical antichain for subgraphs:
 To the best of my current understanding, a property closed under subgraphs only has a finite obstruction set if and only if it has finite interesection with the canonical antichain.
 For the subgraph relation, the canonical antichain is the cycle on n verticies and the path on n verticies with doubled endpoints.
@@ -63,7 +64,27 @@ Let H_n be the set of terminal graphs on n verticies.
 3. H\v is 3 colorable for all verticies in H
 4. H-e is 3 colorable for all edges e in H
 5. for all m in [4,n) : for all J in H_m : for all e in edges of J : H is J-e-subgraph-free
-#### Key Question is the union of H_n for all n finite? If yes NP=coNP
+#### Key Question is the union of H_n for all n finite? If yes, call that set H_* and note P=NP
+The algorithm is as follows:
+```
+three_colorable(G):
+for all h in H_* :
+  if h is a subgraph of G :
+    return false
+for all h in H_* :
+  for all uv in edges of h:
+    if h-uv is a subgraph of G :
+      return three_colorable(G/uv)
+return true      
+```
+Either a terminal graph is reached and the graph requires 4 colors, or a nearly terminal graph is reached and we can reduce the problem to a smaller graph, or neither occurs and by completeness of the terminal set the graph can be 3-colored.
+#### Key question if the union of H_n from 4 to n is bounded in quantity as a function f(n)  : then coNP \subset of NP with O(poly(n)f(n)) advice
+Given a graph on n verticies whose 3-colorability is desired.
+We take our advice to our advice to be the full set of obstructions up to vertex count n.
+The certificate is the linear Zykov tree where edge addition sides identify a 4-color requiring subgraph,
+and so the tree only extends down the non-edge contraction side until a 4 color requireing subgraph is reached.
+This does not fit into P/poly because finding the subgraphs of large size is nontrivial.
+
 Fact: Property 2,3,4 make this a subset of the minimal obstructions under subgraph quasi-order.
 Fact: Property 2 and 3 make the minimum degree of H at least 3.
 Fact: Property 2 and 3 make the graph H J-subgraph free in a similar way to property 5.
@@ -72,7 +93,6 @@ One could extend this to include edge addition as well as non-edge contraction, 
 
 So the number of operations and terminal graphs keep growing in parallel (if you consider each partial edge contraction a different operation).
 ## Weird corollaries
-if ```NP =\= coNP```, then no NP-complete graph property is closed under minors. (Since properties closed under minors have finite obstruction set)
 if ```NP =\= coNP```, then proving a property is NP-complete is sufficient to prove that it lacks a finite obstruction set under any finite set of P computable operations.
-
+if ```NP =\= coNP```, then all NP-complete properties closed under induced minors have infinite obstruction sets.
 
