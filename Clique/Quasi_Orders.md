@@ -1,7 +1,6 @@
 # Introduction
 Here are some notes on quasi-orders.
 I am interested in their relation to computational complexity via graph theory.
-
 ## A relationship between finite obstruction sets and NP vs coNP
 1. Let P be an unlabelled graph Property (i.e. it maps Graphs to true or false and is equivalent on isomorphic graphs)
 2. Let S be a size function (i.e. it maps Graphs to the natural numbers)
@@ -32,20 +31,48 @@ whose isomorphism test takes constant time to check because there are only finit
 Thus, given all 9 assumptions, we have shown that there is a Polynomial time certificate for a coNP hard problem. The conclusion follows.
 ### Concern
 I get too excited/distracted by potential instatiations of this theorem.
+I found that clique cover is closed under induced minors, and misread a theorem causing me to think it had a finite obstruction set.
 ## Problem with the canonical antichain for subgraphs:
 To the best of my current understanding, a property closed under subgraphs only has a finite obstruction set if and only if it has finite interesection with the canonical antichain.
-Said canonical antichain is the cycle on n verticies and the path on n verticies with doubled endpoints.
+For the subgraph relation, the canonical antichain is the cycle on n verticies and the path on n verticies with doubled endpoints.
 If that understanding holds, I have a simple counter-example.
 #### The property of graphs with maximum degree = k for k>3 has a single forbidden subgraph and infinite intersection with the canonical antichain for subgraphs.
 It should be clear that if a graph has maximum degree >= k +1 then it has the star on K+2 nodes as a subgraph.
 Likewise if the maximum degree of a graph is k it lacks the star on k+2 nodes as a subgraph.
 However, since the two antichains have maximum degree 3, they completely intersect this property. Thus an error has occurred somewhere.
-## worked example for 2-colorability (not NP-complete)
+## Worked example for k-colorability
+### 2-colorability 
 It is well established that the chromatic number is monotonically decreasing under edge deletion an vertex removal.
 ```X(g) >= X(g-uv) and X(g) >= X(g\v) ```.
 It is well known that the obstruction set for 2-colorability are the odd cycles.
+However, we can increase the number of operations.
+Using Zykov's Recurrence relation ```X(G) = min( X(G +uv), X(G/uv)) where uv not an edge ```, and the knowledge that a triangle is not 2 colorable,
+we can create the operation:
+Given an induced path on 3 verticies u-v-w inside G:  X(G) <= 2 -> X(G/uw) <= 2 because the triangle occurs in the other side of the recurrence relation.
+So 2-colorability is closed under subgraphs and this new operation, but also its only terminal graph is a triangle.
+Because 2-colorability is easy to identify, this no certificate isn't very interesting, but it can serve as a warm up.
+### 3-colorability
+Our 3 operations, are vertex deletion, edge deletion, and partial non-edge contraction.
+where we can contract an non-edge uv if adding the edge uv would cause a terminal subgraph to appear.
+We can define the set of terminal graphs recursively as follows:
+Let H_4 be the set of terminal graphs on 4 verticies (the only graph is the complete graph on four verticies). (it requires 4 colors, and thus is strictly not 3-colorable)
+Let H_n be the set of terminal graphs on n verticies.
+#### A graph H is in H_n IF:
+1. H has n verticies
+2. H requires 4 colors.
+3. H\v is 3 colorable for all verticies in H
+4. H-e is 3 colorable for all edges e in H
+5. for all m in [4,n) : for all J in H_m : for all e in edges of J : H is J-e-subgraph-free
+#### Key Question is the union of H_n for all n finite? If yes NP=coNP
+Fact: Property 2,3,4 make this a subset of the minimal obstructions under subgraph quasi-order.
+Fact: Property 2 and 3 make the minimum degree of H at least 3.
+Fact: Property 2 and 3 make the graph H J-subgraph free in a similar way to property 5.
 
+One could extend this to include edge addition as well as non-edge contraction, but then the size function becomes a nontrivial question. (here it is just edges plus verticies)
 
-
+So the number of operations and terminal graphs keep growing in parallel (if you consider each partial edge contraction a different operation).
+## Weird corollaries
+if ```NP =\= coNP```, then no NP-complete graph property is closed under minors. (Since properties closed under minors have finite obstruction set)
+if ```NP =\= coNP```, then proving a property is NP-complete is sufficient to prove that it lacks a finite obstruction set under any finite set of P computable operations.
 
 
