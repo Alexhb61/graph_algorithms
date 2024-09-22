@@ -8,8 +8,8 @@ I am interested in their relation to computational complexity via graph theory.
 4. Let T be a finite set of finite graphs.
 #### If 
 1. P is NP-complete to compute on simple finite graphs.
-2. The operations O decrease the size S of the all graphs ( for all g in Graphs: for all o in O : s(g) > s(o(g)) )
-3. P is closed under the operations O ( for all g in Graphs : for all o in O : P(G) -> P(o(G)) )
+2. The operations O decrease the size S of the all graphs ( for all g in Graphs: for all o in O : s(g) > s(o(g)) or o(g) fails )
+3. P is closed under the operations O ( for all g in Graphs : for all o in O : P(G) -> P(o(G)) or o(G) fails )
 4. The size function is polynomial bounded in terms of vertex count (there exists a polynomial p : for all g in Graphs : s(g) < p(n(g)) )
 5. T is a finite obstruction set for P under O. ( for all g in graphs\T : not P(g) -> there exists o in O:  not P(o(g)) and o(g) succeeds ) ( for all graphs j in T:  not P(j) )
 #### Then NP=coNP
