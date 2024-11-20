@@ -2,6 +2,7 @@
 When stressed, I sometimes make attempts on solving the clique problem quickly.
 This attempt builds on a simple extension of the Erdos-Hajnal Conjecture.
 The extension would need to hold in order for the algorithm below to approximate.
+#### Error: The Erdos-Hajnal conjecture actually needs at least two constants
 # Conjectures
 ### Restating the Erdos-Hajnal Conjecture
 For every hereditary family of graphs F, there exists a constant epsilon.
@@ -44,7 +45,7 @@ clique(G,k,b) :
 ```
 ## Runtime argument:
 we have a subgraph of b^(k+1) which picks at most b^k verticies
-T(n) <= (b^(k+1) + b^k choose b^k ) T(n-(b^(k+1) ) )
+T(n) <= (b^(k+1) + b^k choose b^k ) T(n-(b^(k+1) ) ) + n^(b^(k+1))
 which can be analyzed via the chip and conquer master theorem.
 ```log(P)/C <= log(2*b^(k+1) choose b^k ) / b^(k+1)  <= b^k * log(2*b^(k+1) ) / b^(k+1) <=  (k+1)*log(2b)/b <= epsilon_1 ```
 
