@@ -49,7 +49,7 @@ Let the family of simple graphs S_a,b be the graphs s where n(s) = a*b and cliqu
 The algorithm has three parameters: strength r, search buffer b , descent limit d . 
 Roughly Given a current best clique C
 Search for a new local maximum while descending no more than d verticies below the height C.
-Taking steps which remove c verticies and add back a verticies and min(a,c) < r
+Taking steps which remove c verticies and add back a verticies and where min(a,c) < r
 And stop if the number of explored verticies for this local maximum exceed (|C|+a)*(b-2)
 #### Known ambiguity: How to make sure each step increases explored verticies.
 ## Workload:
@@ -61,7 +61,7 @@ d step descent induces a member of J_d
 If the search buffer is exceeded, either search repetition has occurred or a member of S_a,b has occurred.
 Because by a counting argument at least a verticies have been replaced b-1 times and those form a graph with clique size at most a, and ba verticies.
 ### Is search repetition necessary? sometimes? never?
-I need better arguments.
+I need to return to this when I'm not tired.
 ## The chip and conquer Behaviour.
 J_a can be broken into two subproblems of chip size a, because no clique bridges the edgeless gap.
 S_a,a can be broken into <(a^2 +a choose a) problems of chip size a^2, by just choosing all the cliques in the small graph.
