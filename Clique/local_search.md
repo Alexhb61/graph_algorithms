@@ -55,6 +55,7 @@ And stop if the number of explored verticies for this local maximum exceed (|C|+
 ## Workload:
 This is b*n^(2r+d+1) which is a lot.
 ## Connection between graphs and parameters
+### this section seems wrong.
 #### If G is J_d-free, d-1 step descent is sufficient
 d step descent induces a member of J_d
 #### If G is S_a,b-free, search buffer b-1 is sufficient, and (a-1)-strength is sufficient.
