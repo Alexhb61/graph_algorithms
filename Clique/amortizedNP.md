@@ -20,12 +20,12 @@ The more notable downside is that the best c for this reduction is exponential i
 We can construct this reduction-database pair for maximum independent set 
 by focusing on the maximum degree of the graph.
 While it is at least k, applying the inclusion-exclusion principle to the maximum degree vertex gives the
-recursion relation: ```T(n) <= T(n-1) + T(n-k) + O(``` which has a smaller and smaller exponent as k grows.
-I am under the impression the exponent is roughly ```lg(k)/k```.
-So a runtime of at most 2^((lg(k)/k)*n) when all the database calls succeed.
+recursion relation: ```T(n) <= T(n-1) + T(n-k-1) + O(n^2)``` which has a smaller and smaller exponent as k grows.
+I am under the impression the exponent is roughly ```lg(k)/(k+1)```.
+So a runtime of at most 2^((lg(k)/(k+1))*n) when all the database calls succeed.
 When they don't succeed, it still has the same runtime bound 
 as whatever the exponential backup algorithm is because the vertex count is shrinking in the reduction.
-The database's size is at most  O( n^(kn) ) because there is kn/2 edges each of which has n^2 options. 
+The database's size is at most  O( n^((k-1)n) ) because there is (k-1)n/2 edges each of which has n^2 options. 
 ## Making the DB smaller
 One might be able to make the database smaller by finding other heuristics which partially work in the sense that they have a good enough recursion until the graph has some new property.
   
