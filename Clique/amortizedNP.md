@@ -31,6 +31,7 @@ One might be able to make the database smaller by finding other heuristics which
   
 # 0-1 LP
 We may be able to construct a reduction-database pair for integer linear program where all the variables are either 0 or 1.
+### Warning Correctness unclear
 Algorithm:
 ```
 \\ P is the linear program, center and R define an open ball containing all valid solutions
@@ -47,5 +48,7 @@ The ball's radius R can start at any number greater than sqrt(n)/2.
 If we track the center up to some precision epsilon (say 1/n or 1/n^2),
 can one always find a smaller ball which contains the intersection of the previous ball
 and the walls of a nearest lattice point? and furthermore, is there some delta such that the ball's radius always shrinks by at least delta? 
-If both are yes, the algorithm runs in R/delta calls to a database of size (1/epsilon)^n .
+If both are yes, the algorithm runs in R/delta calls to a database of size (1/epsilon)^n . 
+(thus NP would be inside amortized P )
 If either are sometimes true, the algorithm might work if it gets lucky, but might reach a fail state.
+The subproblem that the database needs solved is known as smallest enclosing ball.
