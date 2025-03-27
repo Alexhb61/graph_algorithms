@@ -4,7 +4,7 @@ There are multiple papers on this subject.
 A less technical explanation is available [here](https://www.kidneyregistry.org/for-donors/kidney-donation-blog/what-is-a-kidney-donation-chain/).
 
 # The Problem of Lung Transplant Networks:
-We will talk about the concrete ethics, the simple feasible formulation, a computationally-feasible formulation, and then the computationally-hard logistically-feasible formulation.
+We will talk about the concrete ethics, the simple feasible formulation, a computationally-feasible formulation, a small scale formulation, and then the computationally-hard logistically-feasible formulation.
 ## The Discrete Parts:
 A person's lungs can be safely discussed as 5 lobes (discussing it as more objects complicates healing and surgery).[Expert Testimony Needed]
 However, when live lung transplants are considered they are most frequently done as 2 live donors donating one lobe each to a child. [CITATION NEEDED]
@@ -68,6 +68,12 @@ The b-value in the graph represents lobes given or or unlocked or kept.
 (allowing the donor to not participate)
 #### For each deceased donor z,
 1. There is a vertex z of b-value between 1-5 depending on health ie how many lobes can be seriously donated.
+## Small Scale Formulation
+This formulation can definitely be run, and is definitely logistically feasible, but it doesn't scale up well.
+We can find the best plan on 3-5 patients (depending on how many lobes are being donated).
+We can search for small valid plans by directly considering all small list of patients (3-5), 
+and check that some selection of donors form the best exchange plan. 
+This formulation is feasible because it is polynomial with an exponent dependent on patient count.
 
 ## Constraints which make the problem significantly Harder in theory:
 A potential directed donor is only willing to go into surgery either after or simultaneously as their beneficiary.
