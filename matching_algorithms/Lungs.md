@@ -68,12 +68,14 @@ The b-value in the graph represents lobes given or or unlocked or kept.
 (allowing the donor to not participate)
 #### For each deceased donor z,
 1. There is a vertex z of b-value between 1-5 depending on health ie how many lobes can be seriously donated.
-## Small Scale Formulation
-This formulation can definitely be run, and is definitely logistically feasible, but it doesn't scale up well.
-We can find the best plan on 3-5 patients (depending on how many lobes are being donated).
-We can search for small valid plans by directly considering all small list of patients (3-5), 
-and check that some selection of donors form the best exchange plan. 
-This formulation is feasible because it is polynomial with an exponent dependent on patient count.
+## Small Scale Formulation: Maximal k-D matching
+This formulation can definitely be run, and is definitely logistically feasible, but it might involve fewer transplants than other formulations.
+Each patient is a vertex in the graph.
+For each set of 3-5 patients (depending on how many lobes are being donated), we search through all small valid plans by treating it as a tiny matching problem on the patients and their directed donors, the best plan for a set of patients becomes a hyperedge in the graph (assuming at least one plan is valid)
+Then we find a maximal matching in the hypergraph created by repeatedly picking the heaviest edge until the graph is empty.
+This formulation is computationally feasible because it is polynomial with an exponent dependent on patient count.
+This formulation is logistically feasible as all the plans are small and independent, and other constraints can be enforced by removing offending edges.
+The tradeoff is that this formulation will only find a maximal matching, and so might find a matching of size 1/3 to 1/5 the size of the best possible; and thus fewer patients would have transplants.
 
 ## Constraints which make the problem significantly Harder in theory:
 A potential directed donor is only willing to go into surgery either after or simultaneously as their beneficiary.
