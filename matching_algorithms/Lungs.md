@@ -1,4 +1,9 @@
-# The Inspiration Source: The Problem of Kidney Transplant Chains
+# Intro
+This document is interested in the exchange problem for lung transplants.
+The Problem: Given potential directed donations of portions of lungs, how do you rearrange the objects being donated to obey medical ethics constraints and logistics feasibility constraints while minimizing graft-host disease and other risks?
+This problem seems harder than the corresponding problem for kidneys, and is building on the successful operations research done with that problem.
+
+## The Inspiration Source: The Problem of Kidney Transplant Chains
 This mathematical formulation is inspired by and building on the work of the Kidney Transplant Chain Problem.
 There are multiple papers on this subject.
 A less technical explanation is available [here](https://www.kidneyregistry.org/for-donors/kidney-donation-blog/what-is-a-kidney-donation-chain/).
