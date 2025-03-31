@@ -75,9 +75,9 @@ For each set of 3-5 patients (depending on how many lobes are being donated), we
 Then we find a maximal matching in the hypergraph created by repeatedly picking the heaviest edge until the graph is empty.
 This formulation is computationally feasible because it is polynomial with an exponent dependent on patient count.
 This formulation is logistically feasible as all the plans are small and independent, and other constraints can be enforced by removing offending edges.
-The tradeoff is that this formulation will only find a maximal matching, and so might find a matching of size 1/3 to 1/5 the size of the best possible; and thus fewer patients would have transplants.
+The tradeoff is that this formulation will only find a maximal matching (unless the hypergraph is dense enough to use polynomial time dense algorithms), and so might find a matching of size 1/3 to 1/5 the size of the best possible; and thus fewer patients would have transplants than other formulations.
 
-## Constraints which make the problem significantly Harder in theory:
+## Constraints which make the partial formulation significantly Harder in theory:
 A potential directed donor is only willing to go into surgery either after or simultaneously as their beneficiary.
 The person whose pool they are in.
 Thus, for some constraints, we need to view this as a directed graph or network where we merge verticies p and p' (likewise with d and d').
@@ -86,18 +86,20 @@ Call this the Proposal network.
 We can also think of it as a network of tasks where each transplant is a proposed task.
 Directed edges are partial ordering constraints of tasks.
 [Name consultation needed]
-We call a constraint maybe-feasible if it is easy to detect the violation of the constraint, but hard to enumerate/list using standard computational complexity definitions of easy(polynomial time) and hard(exponential space).[Name consultation needed]
+We call a constraint maybe-feasible if it is easy to detect the violation of the constraint, but hard to enumerate/list using standard computational complexity definitions of easy(polynomial time) and hard(exponential space).[Name consultation needed].
+We call a constraint probably-feasible if it is easy to enumerate, but makes the problem no longer a matching problem.
 
 ### Chest Cavity Constraints: 
 For ethical waste regions, we might want to prevent having to do a ton of cutting of lobes.
 So it might be worthwhile to add up the volume to be placed in either lung cavities and set some upper bound on the total volume placed in either cavity.
 A lower bound can similarly be implemented if we include their original lungs(the non-participation edge) as meeting this lower bound.
-These bounds are simple linear constraints, but make the problem no longer a matching problem and so increase the difficulty of the problem.
+These bounds are simple linear constraints and thus are probably-feasible.
 
 ### All or nothing Surgery:
 For some patients it might be important that they get the new lung lobes all at once.
 This can be implemented as the integrality constraint on the edge between p and p' so that it is either 0 or l in amount.
 Or make it a boolean variable which is weighted l in the appropriate locations.
+This constraint is probably-feasible.
 
 ### Corequisition/Simultaneity Feasibility constraints:
 We will detect a set of surgeries that need to be simultaneous as a strongly connected component in the Proposal network.
