@@ -68,7 +68,7 @@ This formulation is computationally feasible because it is polynomial with an ex
 This formulation is logistically feasible as all the plans are small and independent, and other constraints can be enforced by removing offending edges.
 The tradeoff is that this formulation will only find a submaximum matching, and so might find a matching of size 1/3 to 1/5 the size of the best possible; and thus fewer patients would have transplants than other formulations.
 
-## Logisticially-feasible, medically-optimal, but computationally-hard Formulation: Mixed integer linear program with implied constraints.
+## Logisticially-feasible, medically-optimal, but computationally-hard Formulation: Mixed integer linear program with maybe feasible constraints.
 ### Solving the harder problem:
 This problem is likely NP-hard as a mixed integer linear program with many hidden constraints.
 But might be feasible in practice because of the chaotic nature of immune systems.
