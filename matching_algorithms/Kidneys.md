@@ -1,0 +1,39 @@
+# Introduction
+This note is an attempt to review the literature of kidney transplants to see 
+if they have already considered the formulation of a maximal (or approximate maximum) hypergraph matching.
+This wikipedia article was organized after I was 1st researching this in 2021:
+https://en.wikipedia.org/wiki/Optimal_kidney_exchange#cite_note-7
+Yep, the 2009 paper definitely mentions hypergraph matching in the middle of its reduction chain.
+Furthermore, it presents a nontrivial approximation algorithm.
+However, the paper seems to predate the research direction of high degree hypergraphs.
+https://en.wikipedia.org/wiki/Perfect_matching_in_high-degree_hypergraphs
+https://en.wikipedia.org/wiki/Hall-type_theorems_for_hypergraphs
+https://en.wikipedia.org/wiki/3-dimensional_matching
+Which may or may not be of interest to the kidney transplant problem.
+
+# Thought 1: Reduce Problem to high codegree hypergraphs
+The kidney Transplant Problem is both high degree and weighted (when focusing on short cycles),
+and so might not be able to use the high degree algorithms directly. 
+The problem is also not an uniform hypergraph.
+However, in a similar way to maximum matching is reduced to perfect matching by adding dummy nodes we
+should be able to add dummy patients of varying amount to extend the smaller edges(edges on <k patients)
+into full edges (for whatever k we choose).
+Likewise, for each set of k-1 "patients" we can do a single simultaneous binary search on
+the codegree of the graph, and include the best (1/k+y)n edges for y searched and greater than zero.
+The real question I would need expertise on is what actually is the codegree of the problem.
+Is it high enough for this reduction to work?
+#### More precisely is the codegree > n/k or < n/k ?
+#### If we fix k-1 patients, how many different patients could complete that cycle?
+We can't exactly increase k because both k shows up in the exponent of the algorithm's runtime
+and k shows up as the logistical bound of feasibility.
+
+# Thought 2: Use maximal matchings to augment existing matchings.
+Given a current matching ```M``` in a hypergraph.
+If we find any matching```N``` in a hypergraph, (say a maximal matching)
+We might find a better matching by looking at the set difference of ```M``` and ```N``` :
+ ```M\N U N\M``` Treating this as a bipartite graph (by swapping the roles of verticies and edges)
+and finding its maximum (weight) independent set ```S``` in polynomial time (because its bipartite).
+This would then let us augment the matching to ```M/\N U S ``` . (where we keep the intersection of ```M``` and ```N```)
+This heuristic algorithm doesn't have a clear quality bound from my perspective.
+But it seems simple to implement, and easy to work with because we can stop it midway.
+
