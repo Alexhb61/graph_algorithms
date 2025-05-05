@@ -42,3 +42,6 @@ But it seems simple to implement, and easy to work with because we can stop it m
 While the time between knowing a person is dead and donating their organs might be too short to run transplant chain computations during,
 we can prepare for a potential good match, by looking for the best chain starting with any particular patient.
 Then when a deceased donor shows up, we need only compare that donor to patients and pick the best chain created.
+Even if we want to treat all patients as a ranked priority list,
+we can still search for chains of maximum weight where patient of priority ```i``` has a weight of ```2^(-i)```.
+Is this kind of work already being done? Maybe.
