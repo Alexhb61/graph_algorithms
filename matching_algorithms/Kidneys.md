@@ -54,3 +54,16 @@ Is this kind of work already being done? Maybe.
 These two donation structures seem roughly equivalent mathematically.
 Why do they have different start time in procedures in the US?
 https://www.amjtransplant.org/article/S1600-6135(22)08512-4/fulltext
+
+# Thought 5: Reduce Problem to High 1-degree HyperGraphs.
+The paper linked below shows sufficient conditions for 
+different degrees of a hypergraph to have a perfect matching.
+https://epubs.siam.org/doi/10.1137/080729657
+Even if the proof is non-constructive,
+Given a hypergraph with a perfect matching.
+If we pick the highest weight edge where the remaining graph has a perfect matching,
+we should get a perfect matching of fairly high weight.
+This will take O(nm) time on a n vertex, m hyperedge graph.
+Does this procedure give a maximum or approximately maximum weight? I doubt it.
+There might be reductions from maximum weight perfect matching to perfect matching,
+but I doubt they preserve high degree (I know of some on simple graphs, but not hypergraphs).
