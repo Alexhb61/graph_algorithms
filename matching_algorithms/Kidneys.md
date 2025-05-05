@@ -24,6 +24,7 @@ The real question I would need expertise on is what actually is the codegree of 
 Is it high enough for this reduction to work?
 #### More precisely is the codegree > n/k or < n/k ?
 #### If we fix k-1 patients, how many different patients could complete that cycle?
+#### This second question makes an answer of no (the codegree is low) much clearer.
 We can't exactly increase k because both k shows up in the exponent of the algorithm's runtime
 and k shows up as the logistical bound of feasibility.
 
@@ -37,3 +38,7 @@ This would then let us augment the matching to ```M/\N U S ``` . (where we keep 
 This heuristic algorithm doesn't have a clear quality bound from my perspective.
 But it seems simple to implement, and easy to work with because we can stop it midway.
 
+# Thought 3: Starting Kidney Transplant Chains with Deceased Donors.
+While the time between knowing a person is dead and donating their organs might be too short to run transplant chain computations during,
+we can prepare for a potential good match, by looking for the best chain starting with any particular patient.
+Then when a deceased donor shows up, we need only compare that donor to patients and pick the best chain created.
