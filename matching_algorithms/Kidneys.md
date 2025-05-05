@@ -44,4 +44,13 @@ we can prepare for a potential good match, by looking for the best chain startin
 Then when a deceased donor shows up, we need only compare that donor to patients and pick the best chain created.
 Even if we want to treat all patients as a ranked priority list,
 we can still search for chains of maximum weight where patient of priority ```i``` has a weight of ```2^(-i)```.
+Even if we want to compare chains based on their weakest link,
+We can still search for chains of minimum weight where each transplant of quality integer ```w``` has a "weight" of ```k^-w``` (where k is one more than the maximum length of any chain). 
+This will act as picking a "best" chain sorted by minimum link weight.
+#### What metrics can be used to compare transplant chains?
 Is this kind of work already being done? Maybe.
+
+# Thought 4: Kidney vs Liver Donation
+These two donation structures seem roughly equivalent mathematically.
+Why do they have different start time in procedures in the US?
+https://www.amjtransplant.org/article/S1600-6135(22)08512-4/fulltext
