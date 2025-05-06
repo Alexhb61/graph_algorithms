@@ -1,5 +1,8 @@
 # Introduction
-This note is an attempt to review the literature of kidney transplants to see 
+This note is an attempt to extend thoughts I've had about other transplant problems back to kidneys.
+
+# Thought 0: Check literature.
+First, an attempt to review the literature of kidney transplants to see 
 if they have already considered the formulation of a maximal (or approximate maximum) hypergraph matching.
 This wikipedia article was organized after I was 1st researching this in 2021:
 https://en.wikipedia.org/wiki/Optimal_kidney_exchange#cite_note-7
