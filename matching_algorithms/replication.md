@@ -27,3 +27,16 @@ Another part of the difficulty will come form needing to interview researchers
 about what equipment they used and what equipment they have.
 There might be other logistical constraints occurring.
 
+## An independent angle: Statistically significant evidence of negligible direct effect
+So I had this Idea back in high school, and it has stuck in my head
+because the replication crisis has persisted:
+Say we have a model ```y = a + Bx```
+You have 2 null hypotheses:
+#### Null Hypothesis 1: B = -eps Look for evidence of B > -eps
+#### Null Hypothesis 2: B = +eps Look for evidence of B < +eps
+If both null hypothesis are refuted, 
+Then B is between -eps and +eps.
+We could call this specifically:
+#### Statistically significant evidence of a negligible direct effect.
+We might be able to combine this with standard tests,
+to always report statistically significant evidence of something when the science is done.
