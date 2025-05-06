@@ -40,3 +40,4 @@ We could call this specifically:
 #### Statistically significant evidence of a negligible direct effect.
 We might be able to combine this with standard tests,
 to always report statistically significant evidence of something when the science is done.
+The choice of the word direct corresponds to the choice of a linear model in this case.
