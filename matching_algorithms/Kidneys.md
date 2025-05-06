@@ -56,6 +56,8 @@ Is this kind of work already being done? Maybe.
 # Thought 4: Kidney vs Liver Donation
 These two donation structures seem roughly equivalent mathematically.
 Why do they have different start time in procedures in the US?
+Are there other organs which have this same donation structure?
+Pancreas? (lungs seem different)
 https://www.amjtransplant.org/article/S1600-6135(22)08512-4/fulltext
 
 # Thought 5: Reduce Problem to High 1-degree HyperGraphs.
@@ -109,6 +111,8 @@ return Best_Global_Path_weight
 ```
 Here is a correct dynamic programming algorithm for the problem when path length needs to be bounded.
 It will need slight modification to keep track of what the path is in addition to its weight.
-   
+#### Could pancreas donations be included in this process?
+#### Could lung donations be included in this process?
+(it might make the problem computationally harder)
     
     
