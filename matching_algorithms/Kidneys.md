@@ -67,3 +67,5 @@ This will take O(nm) time on a n vertex, m hyperedge graph.
 Does this procedure give a maximum or approximately maximum weight? I doubt it.
 There might be reductions from maximum weight perfect matching to perfect matching,
 but I doubt they preserve high degree (I know of some on simple graphs, but not hypergraphs).
+#### Does the Optimal Kidney Exchange problem have sufficiently high 1-degree in practice?
+
