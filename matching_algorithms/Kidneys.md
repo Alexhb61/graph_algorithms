@@ -69,3 +69,43 @@ There might be reductions from maximum weight perfect matching to perfect matchi
 but I doubt they preserve high degree (I know of some on simple graphs, but not hypergraphs).
 #### Does the Optimal Kidney Exchange problem have sufficiently high 1-degree in practice?
 
+# Thought 6: Kidney AND Liver Chain
+I originally had this idea in a different organ setting.
+What if the patients who needed a kidney (part of a liver), donated part of their liver (one of their kidneys)?
+#### I am not qualified to judge the feasibility of this from a recovery standpoint.
+But from a consent standpoint, I think this is better!
+There is no strong social bond required.
+The trade from each patients perspective is clear.
+And Computationally, I believe this makes the problem entirely feasible.
+#### This Formulation is not NP-hard.
+To the best of my understanding, being able to donate a body part to someone is an acyclic relation.
+#### Immunology Question: Are there any loops in donation compatibility relation other than perfect matches?
+Obviously, each perfect match can either be turned into a 2 person trade or a single node in the network.
+Then the network of who can donate to who is acyclic, 
+and we can apply dynamic programming techniques to find the highest weight paths of bounded length.
+#### Ethics Question: Can the kidney score and liver score be added in any reasonable sense?
+```
+//given an acyclic donation graph G, and a max path length k
+Solve(G,k)
+Let V = Topologically_Sort_Verticies(G)
+Let Best_Path = Array[V][k]
+For each v in V:
+  // This inner loop might be parallelized as
+  For each l in 1 to k:
+    if l == 1:
+      Best_Path[v][l] = 0
+    if l > 1:
+      Best_Path[v][l] = -infinity
+      For each u in OutNeighborHood(G,v)
+        Best_Path[v][l] = max(Best_Path[v][l], G.weight(u,v) + Best_Path[u][l-1] )
+Best_Global_Path_Weight = 0
+For each v in V:
+  For each l in 1 to k:
+     Best_Global_Path_weight =  max( Best_Global_Path_Weight, Best_Path[v][l] )
+return Best_Global_Path_weight
+```
+Here is a correct dynamic programming algorithm for the problem when path length needs to be bounded.
+It will need slight modification to keep track of what the path is in addition to its weight.
+   
+    
+    
