@@ -59,6 +59,9 @@ Why do they have different start time in procedures in the US?
 Are there other organs which have this same donation structure?
 Pancreas? (lungs seem different)
 https://www.amjtransplant.org/article/S1600-6135(22)08512-4/fulltext
+This looks more like a demographic question, rather than a technology question.
+I'm not very qualified to answer those.
+The first order answer is just quantity of need.
 
 # Thought 5: Reduce Problem to High 1-degree HyperGraphs.
 The paper linked below shows sufficient conditions for 
@@ -113,6 +116,14 @@ Here is a correct dynamic programming algorithm for the problem when path length
 It will need slight modification to keep track of what the path is in addition to its weight.
 #### Could pancreas donations be included in this process?
 #### Could lung donations be included in this process?
-(it might make the problem computationally harder)
+(it might make the problem computationally harder 
+unless we treat the lung patient as multiple nodes in the graph)
+
+These paths however are not immediately startable plans.
+Ways to work around that include:
+1. We could blend the problem space with paired donations. (Which would make the problem NP-hard again)
+2. We could "finish" the chains with a single paired donation making them into cycles. Where we would have to turn the chain info into data that act as edges of another matching problem.
+3. We include altruistic donors in the graph as sources, and for each altruistic donor choose their highest weight chain.
+
     
     
