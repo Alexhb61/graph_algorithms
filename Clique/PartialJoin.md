@@ -108,10 +108,10 @@ The proof is by induction on the size of the graph.
 The base cases are each of the 4 kinds of graphs that show up in the decomposition.
 ## Inductive Case
 The inductive case is below (presented as a recursive algorithm with secret knowledge).
-1. Given G on 2k verticies:
+1. Given G on 2k verticies with maximum clique size k.
 2. Let C be the maximum intersection of any 2 maximum cliques of G (or be the unique maximum clique of G).
 3. If C is the empty set then (by konig's theorem) the complement of G has a perfect matching, and we can decrease G's size by separating out one 2K1 graph into the decomposition while perseving the next G having a perfect matching.
-4. else if C has a vertex v whose maximum degree is not 2k-1 in G then we can separate out a 2K1 in the form v and a non-neighbor.
+4. else if C has a vertex v whose degree is not 2k-1 in G then we can separate out a 2K1 in the form v and a non-neighbor.
 5. else if C has a universal vertex u, and G has a cotriangle C (an independent set of size 3) we can separate out u+C the claw.
 6. else if C has a universal vertex u, and G has an odd-antihole O We can separate out O+u the odd antihole + u.
 7. else we know there is no odd antiholes and no odd holes ( which would contain large independent sets), so the graph is Berge and our decomposition is done. We can report its coloring as the end of our certificate.
