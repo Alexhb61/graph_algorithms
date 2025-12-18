@@ -1,5 +1,7 @@
+This note was an attempt to prove that NP = coNP.
+It broke under more scrutiny in the last section.
 # Introduction
-This note is an attempt to prove that NP = coNP
+This note was an attempt to prove that NP = coNP,
 by showing that there is a decomposition for graphs without majority cliques ( 2w(G) <= n(G) ) that ALWAYS exists.
 We first introduce the terms of the relevant graph theory.
 Then we show that the decomposition only exists for graphs without majority cliques.
