@@ -10,7 +10,6 @@ A less technical explanation is available [here](https://www.kidneyregistry.org/
 
 # The Problem of Lung Transplant Networks:
 We will first layout the concrete ethics.
-Then we discuss the logistically-difficult, medically-suboptimal, and computationally-difficult formulations of the problem ( each of which is optimal in the other two ways).
 ## The Discrete Parts:
 A person's lungs can be safely discussed as 5 lobes (discussing it as more objects complicates healing and surgery).[Expert Testimony Needed]
 However, when live lung transplants are considered they are most frequently done as 2 live donors donating one lobe each to a child. [CITATION NEEDED]
@@ -30,6 +29,9 @@ So, they will commit to giving a lung lobe if their directed beneficiary gets a 
 This would create a donor pool of directed potential donors.
 There might be ethics reasons we need d to equal l, and their might be efficiency reasons that d should exceed l.
 The following formulation actually allows donors to participate in multiple pools while still never being asked to donate twice.
+# Formulations:
+Now, we discuss the logistically-difficult, medically-suboptimal, and computationally-difficult formulations of the problem
+( each of which is optimal in the other two ways).
 ## Solvable, Medically-Optimal, and Logistically-infeasible Formulation: weighted perfect b-matching
 We can set this as a weighted b-perfect matching problem.
 This problem can be solved optimally, and so we can compare how the feasibility or fancier constraints effect or don't effect the total medical benefit.
@@ -64,7 +66,7 @@ For each set of 3-5 patients (depending on how many lobes are being donated), we
 Even if we need to brute force search all plans for a valid one that is exponential in the size of donor pool (which we expect to be small).
 Then we find a maximal matching in the hypergraph created by repeatedly picking the heaviest edge until the graph is empty.
 We might instead look in the literature for algorithms which work on dense hypergraphs, or algorithms which approximate the maximum matching in polynomial time. 
-This formulation is computationally feasible because it is polynomial with an exponent dependent on patient count.
+This formulation is computationally feasible because it is exponential in the size of the small plans(how many patients we include in a small plan), but is polynomial in the number of patients.
 This formulation is logistically feasible as all the plans are small and independent, and other constraints can be enforced by removing offending edges.
 The tradeoff is that this formulation will only find a submaximum matching, and so might find a matching of size 1/3 to 1/5 the size of the best possible; and thus fewer patients would have transplants than other formulations.
 
@@ -118,3 +120,17 @@ This size of that weakly connected component in terms of nodes is equal to the n
 Thus, we might need to bound this size because of likelihood of backing out concerns.
 This is an easy to detect structure (linear time) but is a subgraph, and so fits into our regime of maybe-feasible.
 
+#### Note
+We could also rephrase this section as convex integer programs given via a separation orcale.
+That might be a more standard or useful approach.
+# Conclusion
+## Why is this document not yet code shaped:
+In the language of theoretical computer science, you could frame these different formulations as reductions from the same logistics problem to different more-established problems. 
+In that sense, if you could define an input format for the problem, one could turn these implicit reductions into codeis which then call or produce output formats for standard logistics software to find a solution.
+When defining the input format, that requires someone deciding that all the relevant constraints have been made explicit.
+I am not presently qualified to do that.
+When defining the output format, that may require integration with existing planning, approval, and scheduling software; because I think a plain list of like 100 matches is not easy to use.
+I am not presently qualified to do that.
+## Final thought
+In conclusion, while more complicated than the optimal Kidney Exchange Problem,
+I believe the Optimal Lung Exchange problem can be tackled.
