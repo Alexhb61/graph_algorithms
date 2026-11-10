@@ -28,7 +28,22 @@ So, they will commit to giving a lung lobe if their directed beneficiary gets a 
 #### Let each sick patient find d  directed potential donors and need l lobes to be donated to them.
 This would create a donor pool of directed potential donors.
 There might be ethics reasons we need d to equal l, and their might be efficiency reasons that d should exceed l.
-The following formulation actually allows donors to participate in multiple pools while still never being asked to donate twice.
+The following formulations actually allows donors to participate in multiple pools while still never being asked to donate twice.
+## The surgery complications:
+Historically, only the lower left or lower right lobe have been removed from donors. [Citation Needed]
+The 5 lobes of the lungs are not close to identical in shape. [Expert testimony needed]
+So which lobes to remove and where to place it is a decision either a surgeon has to make every time 
+or some surgeons have to make a medical rating/arrangement algorithm.
+This algorithm needs to rate how good the combination of the donor-patients is, and
+decide how to arrange the lobes for surgery.
+#### I am not currently qualified to write this algorithm.
+If the algorithm is a well-defined easily-computable function of the donor-lobe-recipient-location pairing ( and the relevant medical data),
+then the first formulation below works as intended (matching problem).
+If The algorithm is a well-defined easily-computable function of the choice of donors and recipients (and their relevant medical data),
+then the second formulation below works as intended (hypergraph matching problem).
+The distinction being emphasized is whether the characteristics of two donors who are donating to the same recipient interact at all.
+If such an interaction is non-existent or "convex",
+the third formulation works as described below (convex integer Programming).
 # Formulations:
 Now, we discuss the logistically-difficult, medically-suboptimal, and computationally-difficult formulations of the problem
 ( each of which is optimal in the other two ways).
@@ -38,13 +53,14 @@ This problem can be solved optimally, and so we can compare how the feasibility 
 The weights in the graph represents the positive impact or quality of that potential donation.
 This formulation will linearly add the value of all donations.
 (It can not account for interaction benefits or downsides)
-The b-value in the graph represents lobes given or or unlocked or kept.
+The edges in the graph represents lobes given or or unlocked or kept.
+Each donation edge can only be chosen once, other edges can be chosen multiple times.
 #### For each sick patients p,
 1. there is a vertex p of b-value l  ( allowing them to receive l lobes)
 2. there is a vertex p' of b-value l ( allowing them to unlock l donors)
 3. there is a weight 0 edge between p and p' (no benefit is acquired if they do not participate.)
 4. p has positive weight incoming edges from donors d', a , or z each weighed to indicate the medical benefit.
-(We might use multiple edges between a donor-patient to consider which lobe to donate and which location to put it in.)
+(We might use multiple edges between a donor-patient to consider which lobe to donate and use different vertecies p to indicate which location to put it in.)
 5. p' has a loop on itself (this allows a patient to receive donations without their donors donating)
 #### For each directed donor d,
 1. there is a vertex d of b-value 1.
@@ -70,47 +86,50 @@ This formulation is computationally feasible because it is exponential in the si
 This formulation is logistically feasible as all the plans are small and independent, and other constraints can be enforced by removing offending edges.
 The tradeoff is that this formulation will only find a submaximum matching, and so might find a matching of size 1/3 to 1/5 the size of the best possible; and thus fewer patients would have transplants than other formulations.
 
-## Logisticially-feasible, medically-optimal, but computationally-hard Formulation: Mixed integer linear program with maybe feasible constraints.
+## Logisticially-feasible, medically-optimal, but computationally-hard Formulation: integer convex program 
 ### Solving the harder problem:
 This problem is likely NP-hard as a mixed integer linear program with many hidden constraints.
 But might be feasible in practice because of the chaotic nature of immune systems.
-A strategy similar to those with Kidney Transplants might work as both are mixed integer linear programs with many maybe-feasible constraints.
+A strategy similar to those with Kidney Transplants might work as both are mixed integer linear programs with many implied constraints.
+A strategy similar to the ellipsoid method might also work 
+because we can detect any violated constraint in linear time when the potential solution is integral.
 ### Context for logistic constraints
 A potential directed donor is only willing to go into surgery either after or simultaneously as their beneficiary.
 The person whose pool they are in.
 Thus, for some constraints, we need to view this as a directed graph or network where we merge verticies p and p' (likewise with d and d').
 All edges from d' to p need to be directed from d' to p, and edges from d to p' need to be directed from d to p'.
-Call this the Proposal network.
+Call this the Proposal network. 
 We can also think of it as a network of tasks where each transplant is a proposed task.
 Directed edges are partial ordering constraints of tasks.
 [Name consultation needed]
-We call a constraint maybe-feasible if it is easy to detect the violation of the constraint, but hard to enumerate/list using standard computational complexity definitions of easy(polynomial time) and hard(exponential space).[Name consultation needed]
-We call a constraint probably-feasible if it is easy to enumerate, but makes the problem no longer a matching problem.[Name consultation needed]
+We call a constraint integeral-implied if it is easy to detect the violation of the constraint by an intergral value,
+but hard to enumerate/list using standard computational complexity definitions of easy(polynomial time) and hard(exponential space).
+We call a constraint linear if it is easy to enumerate, but makes the problem no longer a matching problem. 
+We call a constraint integral if it is easy to enumerate, but makes the problem less of a convex program.
 
 ### Chest Cavity Constraints: 
 For ethical waste regions, we might want to prevent having to do a ton of cutting of lobes.
 So it might be worthwhile to add up the volume to be placed in either lung cavities and set some upper bound on the total volume placed in either cavity.
 A lower bound can similarly be implemented if we include their original lungs(the non-participation edge) as meeting this lower bound.
-These bounds are simple linear constraints and thus are probably-feasible.
+These bounds are both linear constraints.
 
 ### All or nothing Surgery:
 For some patients it might be important that they get the new lung lobes all at once.
 This can be implemented as the integrality constraint on the edge between p and p' so that it is either 0 or l in amount.
 Or make it a boolean variable which is weighted l in the appropriate locations.
-This constraint is probably-feasible.
 
 ### Corequisition/Simultaneity Feasibility constraints:
 We will detect a set of surgeries that need to be simultaneous as a strongly connected component in the Proposal network.
 The size of that strongly connected component in terms of edges correlates with the number of lobes that need to be simultaneously transfered.
 Thus, we might need to bound this size because of limited resources.
-This is an easy to detect structure (linear time) but is a subgraph and thus hard to list, And so is maybe-feasible.
+This is an easy to detect structure (linear time) but is a subgraph and thus hard to list, and is thus integral-implied.
 
 ### Plan length Feasibility constraints:
 We will be able to estimate how long a plan is by measuring the length of sequential surgeries by looking at the strongly connected components condensation of the Proposal Network.
 Because that condensation is a directed acyclic graph, we can detect the longest path in the dag with components weighted by duration or some similar metric.
-In the formulation of the proposal network as a set of tasks, this is the critical path in the network.
+In the formulation of the proposal network as a set of tasks, this is the critical path in the condensation of the network.
 We might need to bound the lengths of theses plans because of urgency constraints.
-Again, this length can be computed for a plan in linear time, but is a subgraph feature; thus, this constraint fits into the category of maybe-feasible constraints.
+Again, this length can be computed for a plan in linear time, but is a subgraph feature; thus, this constraint fits into the category of integral-implied constraints.
 
 ### Plan size Feasability constraints:
 We can detect a set of surgeries that need to approved or rejected (or cut down) as a whole as a weakly connected component in the Proposal Network.
@@ -118,18 +137,21 @@ I am referring to this as a plan.
 A plan can be cut along a point in a topological ordering of the strongly connected component condensation.
 This size of that weakly connected component in terms of nodes is equal to the number of patients whose consent is needed on some level.
 Thus, we might need to bound this size because of likelihood of backing out concerns.
-This is an easy to detect structure (linear time) but is a subgraph, and so fits into our regime of maybe-feasible.
+This is an easy to detect structure (linear time) but is a subgraph, and so fits into our regime of integral-implied.
 
 #### Note
-We could also rephrase this section as convex integer programs given via a separation orcale.
-That might be a more standard or useful approach.
+A convex program is technically a linear program with many implied constraints.
+
 # Conclusion
 ## Why is this document not yet code shaped:
-In the language of theoretical computer science, you could frame these different formulations as reductions from the same logistics problem to different more-established problems. 
-In that sense, if you could define an input format for the problem, one could turn these implicit reductions into codeis which then call or produce output formats for standard logistics software to find a solution.
+In the language of theoretical computer science, you could frame these different formulations 
+as reductions from the same logistics problem to different more-established problems. 
+In that sense, if you could define an input format for the problem, one could turn these implicit reductions into code 
+which then calls or produces output formats for standard logistics software to find a solution.
 When defining the input format, that requires someone deciding that all the relevant constraints have been made explicit.
 I am not presently qualified to do that.
-When defining the output format, that may require integration with existing planning, approval, and scheduling software; because I think a plain list of like 100 matches is not easy to use.
+When defining the output format, that may require integration with existing planning, approval, and scheduling software;
+because, I think a plain list of like 100 matches is not easy to use.
 I am not presently qualified to do that.
 ## Final thought
 In conclusion, while more complicated than the optimal Kidney Exchange Problem,
